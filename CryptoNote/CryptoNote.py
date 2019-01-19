@@ -5,7 +5,8 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-
+import os.path
+import client
 
 def GenerationPassToKey(password):
     salt = os.urandom(16)
@@ -16,28 +17,42 @@ def GenerationPassToKey(password):
     iterations=100000,
     backend=default_backend()
     )
-    key = base64.urlsafe_b64encode(kdf.derive(password))
+    key = base64.urlsafe_b64encode(kdf.derive(password.encode()))
     return key
 
-def encrypt(cipher_key):
+def encrypt(cipher_key, text_to_encypt):
     cipher = Fernet(cipher_key)
-    text = b'My super secret message'
-    encrypted_text = cipher.encrypt(text) 
+    encrypted_text = cipher.encrypt(text_to_encypt.encode()) 
     return encrypted_text
 
 def decrypt(cipher_key, encrypted_text):
     cipher = Fernet(cipher_key)
     decrypted_text = cipher.decrypt(encrypted_text)
-    return decrypted_text
+    return decrypted_text.decode()
+
+def get_key():
+    
+    if (not(os.path.exists("myprivate.key"))):
+        print("Input your super secret pass: ")
+        password = input()
+        key_file = open("myprivate.key", "w")
+        key = GenerationPassToKey(password.encode())
+        key_file.write(key.decode())
+        key_file.close()
+        return key
+    else: 
+        key_file = open("myprivate.key", "r")
+        key = key_file.read()
+        key_file.close()
+        return key.encode()
 
 if __name__ == "__main__":
     
-    #cipher_key = Fernet.generate_key()
-    cipher_key = GenerationPassToKey("testpass1234".encode())
-    print(cipher_key)
-    enc_text = encrypt(cipher_key)
+    client.GetServerKey()
+    cipher_key = get_key()
+    print("Enter your SUPER(super-super) secret text: ")
+    msg = input()
+    enc_text = encrypt(cipher_key, msg)
     print(str(enc_text))
     original = decrypt(cipher_key, enc_text)
-    print("\n\n" + original.decode())
-    
-    txt = "Hello World."
+    print("\n\n" + original)
