@@ -4,13 +4,13 @@ import requests
 
 def ConnectToServer():
         sock = socket.socket()
-        sock.connect(('localhost', 9090))
+        sock.connect(('localhost', 4090))
         return sock
 
 def test():
     try:
         sock = socket.socket()
-        sock.connect(('localhost', 9090))
+        sock.connect(('localhost', 4090))
 
         send_request = {"type": "GetKey", "id": "dfs1"}
         sock.send(json.dumps(send_request).encode()) #"Hello, World!".encode()

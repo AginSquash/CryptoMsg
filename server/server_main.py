@@ -1,11 +1,20 @@
 import socket
 import json
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives.asymmetric import rsa
-
+import server_crypto
+import time
 
 sock = socket.socket()
-sock.bind(('', 9090))
+isNotConnected = True
+
+while isNotConnected: 
+    try:
+        sock.bind(('', 4090))
+        isNotConnected = False
+        print("Connected")
+    except Exception as e:
+        print(str(e))
+        time.sleep(5)
+
 sock.listen(1)
 
 while True:
@@ -17,6 +26,8 @@ while True:
         data = conn.recv(1024)
         json_fromClient = json.loads(data.decode()) #json.loads(data.decode())
         print(json_fromClient["type"])
+        if (json_fromClient["type"]=="GetKey"):
+            server_crypto.CreateServerRSA()
         if not data:
             break
         conn.send(("some key here!").encode()) #upper!
