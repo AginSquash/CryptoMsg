@@ -11,7 +11,9 @@ def test():
     try:
         sock = socket.socket()
         sock.connect(('localhost', 9090))
-        sock.send("Hello, World!".encode())
+
+        send_request = {"type": "GetKey", "id": "dfs1"}
+        sock.send(json.dumps(send_request).encode()) #"Hello, World!".encode()
 
         data = sock.recv(1024)
         sock.close()

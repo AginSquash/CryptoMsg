@@ -17,7 +17,7 @@ def GenerationPassToKey(password):
     iterations=100000,
     backend=default_backend()
     )
-    key = base64.urlsafe_b64encode(kdf.derive(password.encode()))
+    key = base64.urlsafe_b64encode(kdf.derive(password))
     return key
 
 def encrypt(cipher_key, text_to_encypt):
@@ -49,10 +49,10 @@ def get_key():
 if __name__ == "__main__":
     
     client.GetServerKey()
-    cipher_key = get_key()
-    print("Enter your SUPER(super-super) secret text: ")
-    msg = input()
-    enc_text = encrypt(cipher_key, msg)
-    print(str(enc_text))
-    original = decrypt(cipher_key, enc_text)
-    print("\n\n" + original)
+    cipher_key = Fernet.generate_key() #get_key()
+    #print("Enter your SUPER(super-super) secret text: ")
+    #msg = input()
+    #enc_text = encrypt(cipher_key, msg)
+    #print(str(enc_text))
+    #original = decrypt(cipher_key, enc_text)
+    #print("\n\n" + original)
