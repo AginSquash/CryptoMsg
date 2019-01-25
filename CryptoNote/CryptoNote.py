@@ -49,7 +49,9 @@ def get_key():
 if __name__ == "__main__":
     
     client.GetServerKey()
-    cipher_key = Fernet.generate_key() #get_key()
+    #cipher_key = Fernet.generate_key() #get_key()
+
+    
     #print("Enter your SUPER(super-super) secret text: ")
     #msg = input()
     #enc_text = encrypt(cipher_key, msg)

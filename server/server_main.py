@@ -27,16 +27,16 @@ try:
             print("connected: "+ str(addr))
             data = conn.recv(1024)
             json_fromClient = json.loads(data.decode()) #json.loads(data.decode())
-            server_requestHandler.Handle(json_fromClient)    
+            _json_toClient = server_requestHandler.Handle(json_fromClient)    
             if not data:
                 break
-            conn.send(("some key here!").encode()) #upper!
+            conn.send(json.dumps(_json_toClient).encode()) #upper!
             conn.close()
         except Exception as e:
             print(str(e))
+            time.sleep(1)
             conn.close()
             print("Conn closed!")
             break  
 except KeyboardInterrupt:
     print("GoodBye!")
-    #conn.close()

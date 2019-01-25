@@ -32,14 +32,16 @@ def CreateServerRSA():
         private_pem_out.write(private_pem)
 
 
-    public_pem = public_key.public_bytes(
-        encoding=serialization.Encoding.PEM,
-        format=serialization.PublicFormat.PKCS1
-    )
-    with open("RSA/public_key.pem", 'wb') as public_pem_out:
-        public_pem_out.write(public_pem)
+    #public_pem = public_key.public_bytes(
+    #    encoding=serialization.Encoding.PEM,
+    #    format=serialization.PublicFormat.PKCS1
+    #)
+    #with open("RSA/public_key.pem", 'wb') as public_pem_out:
+    #    public_pem_out.write(public_pem)
  
 def _LoadServer_Private_RSA():
+    if (not(os.path.exists("RSA/private_key.pem"))):
+        CreateServerRSA()
     with open("RSA/private_key.pem", 'rb') as pem_in:
         pemlines = pem_in.read()
     private_key = serialization.load_pem_private_key(
@@ -50,4 +52,7 @@ def _LoadServer_Private_RSA():
     return private_key
  
 def LoadServerPublicRSA(private_key):
-    return private_key.public_key().public_bytes(encoding=serialization.Encoding.PEM,format=serialization.PublicFormat.PKCS1)
+    return private_key.public_key().public_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PublicFormat.PKCS1
+        )

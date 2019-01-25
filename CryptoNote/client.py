@@ -24,9 +24,10 @@ def test():
 
 def GetServerKey():
     sock = ConnectToServer()
-    send_request = {"type": "GetKey", "id": "dfs1"}
+    send_request = {"type": "GetKey"}
     sock.send(json.dumps(send_request).encode())  #, sort_keys=True
     #sock.send(json.loads('["type": "GetKey", "6": 7]').encode())
     key = sock.recv(1024)
+    print (key)
     sock.close()
     return key
