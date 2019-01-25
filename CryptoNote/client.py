@@ -1,6 +1,7 @@
 import socket
 import json
 import requests
+import client_hander
 
 def ConnectToServer():
         sock = socket.socket()
@@ -28,6 +29,6 @@ def GetServerKey():
     sock.send(json.dumps(send_request).encode())  #, sort_keys=True
     #sock.send(json.loads('["type": "GetKey", "6": 7]').encode())
     key = sock.recv(1024)
-    print (key)
+    client_hander.Handler(json.loads(key.decode()))
     sock.close()
-    return key
+    return key.decode()

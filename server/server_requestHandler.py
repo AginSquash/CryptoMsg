@@ -17,14 +17,13 @@ def Handle(json_fromClient):
         type_msg == "GetKey": GetServerKey()
         
     }
-    print(CJ.Get)
     return CJ.Get()
 
 def GetServerKey():
     public_key = server_crypto.LoadServerPublicRSA(server_crypto._LoadServer_Private_RSA())
     _json_toClient = {
         "type": "ServerRSAKey",
-        "key": str(public_key)
+        "key": str(public_key.decode())
     }
 
     CJ.Set(_json_toClient)
