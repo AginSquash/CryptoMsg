@@ -8,6 +8,7 @@ __pycache__/
 #      Key-files     #
 ######################
 *.key
+*.pem
 
 # Logs and databases #
 ######################

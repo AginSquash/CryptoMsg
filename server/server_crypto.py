@@ -6,6 +6,10 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.serialization import PrivateFormat
 from cryptography.hazmat.primitives.serialization import NoEncryption
 
+from cryptography.hazmat.backends import default_backend
+
+
+
 def CreateServerRSA():
     private_key = rsa.generate_private_key(
         public_exponent=65537,
@@ -23,7 +27,7 @@ def CreateServerRSA():
         encoding=serialization.Encoding.PEM, 
         format=serialization.PrivateFormat.TraditionalOpenSSL,
         encryption_algorithm=serialization.NoEncryption()
-        )
+    )
     with open("RSA/private_key.pem", 'wb') as private_pem_out:
         private_pem_out.write(private_pem)
 
@@ -35,4 +39,15 @@ def CreateServerRSA():
     with open("RSA/public_key.pem", 'wb') as public_pem_out:
         public_pem_out.write(public_pem)
  
+def _LoadServer_Private_RSA():
+    with open("RSA/private_key.pem", 'rb') as pem_in:
+        pemlines = pem_in.read()
+    private_key = serialization.load_pem_private_key(
+        pemlines, 
+        None, 
+        default_backend()
+    )
+    return private_key
  
+def LoadServerPublicRSA(private_key):
+    return private_key.public_key().public_bytes(encoding=serialization.Encoding.PEM,format=serialization.PublicFormat.PKCS1)

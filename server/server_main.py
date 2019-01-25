@@ -28,6 +28,7 @@ while True:
         print(json_fromClient["type"])
         if (json_fromClient["type"]=="GetKey"):
             server_crypto.CreateServerRSA()
+            #print(server_crypto.LoadServerPublicRSA(server_crypto._LoadServer_Private_RSA()))
         if not data:
             break
         conn.send(("some key here!").encode()) #upper!
