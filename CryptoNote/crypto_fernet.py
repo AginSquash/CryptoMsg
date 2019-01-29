@@ -8,6 +8,7 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import os.path
 
 def GenerationPassToKey(password):
+    
     salt = os.urandom(16)
     kdf = PBKDF2HMAC(
     algorithm=hashes.SHA256(),
@@ -19,17 +20,17 @@ def GenerationPassToKey(password):
     key = base64.urlsafe_b64encode(kdf.derive(password))
     return key
 
-def encrypt(cipher_key, text_to_encypt):
+def Encrypt(cipher_key, text_to_encypt):
     cipher = Fernet(cipher_key)
     encrypted_text = cipher.encrypt(text_to_encypt.encode()) 
     return encrypted_text
 
-def decrypt(cipher_key, encrypted_text):
+def Decrypt(cipher_key, encrypted_text):
     cipher = Fernet(cipher_key)
     decrypted_text = cipher.decrypt(encrypted_text)
     return decrypted_text.decode()
 
-def get_key():
+def Get_key():
     
     if (not(os.path.exists("myprivate.key"))):
         print("Input your super secret pass: ")
@@ -44,3 +45,6 @@ def get_key():
         key = key_file.read()
         key_file.close()
         return key.encode()
+
+def RandomKey():
+     return Fernet.generate_key()

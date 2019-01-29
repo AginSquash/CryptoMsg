@@ -8,6 +8,8 @@ try:
     sock = socket.socket()
     isNotConnected = True
 
+    server_crypto.CreateServerRSA()
+
     while isNotConnected: 
         try:
             sock.bind(('', 4090))
