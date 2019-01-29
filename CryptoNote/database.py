@@ -27,4 +27,6 @@ def GetData(id):
     conn, cursor = ConnectToDB()
 
     key = cursor.execute("SELECT key FROM keys WHERE id=(?);", [id]).fetchone()
+    
+    conn.close()
     return key[0]

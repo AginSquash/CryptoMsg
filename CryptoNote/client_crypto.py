@@ -10,29 +10,31 @@ def SetServerRSAKey(key):
         os.mkdir(str(os.getcwd()) + "/RSA")
     except OSError:
         pass
-    with open("RSA/public_key.pem", 'wb') as pem_toWrite:
+    with open("RSA/server_publicKey.pem", 'wb') as pem_toWrite:
         pem_toWrite.write(key.encode())
 
 def GetServerRSAKey():
-    with open("RSA/public_key.pem", 'rb') as pem_toRead:
+    with open("RSA/server_publicKey.pem", 'rb') as pem_toRead:
         key_fromFile = pem_toRead.read()
-    key = serialization.load_pem_public_key(
-        key_fromFile,
-        default_backend()
+        key = serialization.load_pem_public_key(
+            key_fromFile,
+            default_backend()
         )
     return key
 
 
 def EncryptRSA(text_to_encrypt):
     public_key = GetServerRSAKey()
-    return public_key.encrypt(
-        text_to_encrypt,
-        padding.OAEP(
-            mgf=padding.MGF1(algorithm=hashes.SHA256()),
-            algorithm=hashes.SHA256(),
-            label=None
-        )
-    )
+    ciphertext = public_key.encrypt(
+         str(text_to_encrypt).encode(),
+         padding.OAEP(
+             mgf=padding.MGF1(algorithm=hashes.SHA256()),
+             algorithm=hashes.SHA256(),
+             label=None
+         )
+     )
+    return ciphertext
+    
 
 
 def ServerKey_toText(public_key):
