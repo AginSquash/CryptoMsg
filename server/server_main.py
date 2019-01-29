@@ -8,7 +8,7 @@ try:
     sock = socket.socket()
     isNotConnected = True
 
-    server_crypto.CreateServerRSA()
+    #server_crypto.CreateServerRSA()
 
     while isNotConnected: 
         try:
@@ -27,11 +27,14 @@ try:
             conn, addr = sock.accept()
             print("connected: "+ str(addr))
             data = conn.recv(1024)
-            json_fromClient = json.loads(data.decode()) #json.loads(data.decode())
+            #json_fromClient = json.loads(data.decode()) #json.loads(data.decode())
+
+            print(server_crypto.DecryptRSA(data))
+
             _json_toClient = server_requestHandler.Handle(json_fromClient)  
             if not data:
                 break
-            conn.send(json.dumps(_json_toClient).encode()) #upper!
+            conn.send(json.dumps(_json_toClient).encode())
             #print(str(_json_toClient.decode()))
             conn.close()
         except Exception as e:

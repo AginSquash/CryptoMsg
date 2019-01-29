@@ -23,7 +23,7 @@ def GetServerRSAKey():
     return key
 
 
-def EncryptRSA(text_to_encrypt):
+def EncryptRSA(text_to_encrypt):  #Text encoded!
     public_key = GetServerRSAKey()
     ciphertext = public_key.encrypt(
          str(text_to_encrypt).encode(),
@@ -33,6 +33,7 @@ def EncryptRSA(text_to_encrypt):
              label=None
          )
      )
+    print("Chipher text: ", str(ciphertext))
     return ciphertext
     
 

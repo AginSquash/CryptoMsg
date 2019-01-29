@@ -7,7 +7,8 @@ from cryptography.hazmat.primitives.serialization import PrivateFormat
 from cryptography.hazmat.primitives.serialization import NoEncryption
 
 from cryptography.hazmat.backends import default_backend
-
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import padding
 
 
 def CreateServerRSA():
@@ -39,6 +40,23 @@ def CreateServerRSA():
     with open("RSA/public_key.pem", 'wb') as public_pem_out:
         public_pem_out.write(public_pem)
  
+
+def DecryptRSA(dataFromClient):
+    print("Data: " + str(dataFromClient))
+    private_key = _LoadServer_Private_RSA()
+    decrypted = private_key.decrypt(
+        dataFromClient,
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA256()),
+            algorithm=hashes.SHA256(),
+            label=None
+        )
+    )
+    print("Decrypted ", str(decrypted))
+    return decrypted.decode(errors='replace')   #decoded!
+
+
+
 def _LoadServer_Private_RSA():
     if (not(os.path.exists("RSA/private_key.pem"))):
         CreateServerRSA()
