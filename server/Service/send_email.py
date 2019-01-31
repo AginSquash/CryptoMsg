@@ -1,6 +1,7 @@
 
 import smtplib
-import email_config
+import Service.email_config as email_config
+import Util.GetRandom as GetRandom
 
 
 def send_email(subject, to_addr, from_addr, body_text):
@@ -34,3 +35,12 @@ if __name__ == "__main__":
     from_addr = "aginsquash@gmail.com"
     body_text = "Python rules them all!"
     send_email(subject, to_addr, from_addr, body_text)
+
+def RegisterEmail(email):
+    subject = "Register CryptoMSG"
+    to_addr = email
+    from_addr = "aginsquash@gmail.com"
+    body_text = "Please, enter this code: " + GetRandom.GetRandomCode(6)
+    send_email(subject, to_addr, from_addr, body_text)
+
+    print("Email Sended!")

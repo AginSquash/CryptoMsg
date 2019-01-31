@@ -3,6 +3,7 @@ import json
 import server_crypto
 import time
 import server_requestHandler
+import ast
 
 try:
     sock = socket.socket()
@@ -31,7 +32,9 @@ try:
 
             print(str(server_crypto.DecryptRSA(data)) )
 
-            #_json_toClient = server_requestHandler.Handle(json_fromClient)  
+            dictionary = ast.literal_eval( str(server_crypto.DecryptRSA(data)))
+
+            _json_toClient = server_requestHandler.Handle( dictionary ) 
             if not data:
                 break
             #conn.send(json.dumps(_json_toClient).encode())

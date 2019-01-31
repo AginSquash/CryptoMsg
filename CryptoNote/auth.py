@@ -9,7 +9,7 @@ import database
 def Register():
     sock = client.ConnectToServer()
     print("Connected to server\n\nPlease enter your Email: ")
-    user_email = "email here" #input()
+    user_email = "as.weiss@ya.ru" #input()
     key = crypto_fernet.RandomKey()
     #print("Key: %s Data: %s" % (str(key), str(datetime.date.today()) ) )
 
