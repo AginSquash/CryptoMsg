@@ -1,5 +1,6 @@
 # Visual Studio cache directory
 .vs/
+cryptomsg.code-workspace
 
 .git/
 
@@ -9,6 +10,7 @@ __pycache__/
 ######################
 *.key
 *.pem
+email_config.py
 
 # Logs and databases #
 ######################

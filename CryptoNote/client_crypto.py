@@ -33,7 +33,7 @@ def EncryptRSA(text_to_encrypt):  #Text encoded!
              label=None
          )
      )
-    print("Chipher text: ", str(ciphertext))
+    #print("Chipher text: ", str(ciphertext))
     return ciphertext
     
 

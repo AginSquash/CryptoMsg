@@ -29,12 +29,12 @@ try:
             data = conn.recv(1024)
             #json_fromClient = json.loads(data.decode()) #json.loads(data.decode())
 
-            print(server_crypto.DecryptRSA(data))
+            print(str(server_crypto.DecryptRSA(data)) )
 
-            _json_toClient = server_requestHandler.Handle(json_fromClient)  
+            #_json_toClient = server_requestHandler.Handle(json_fromClient)  
             if not data:
                 break
-            conn.send(json.dumps(_json_toClient).encode())
+            #conn.send(json.dumps(_json_toClient).encode())
             #print(str(_json_toClient.decode()))
             conn.close()
         except Exception as e:

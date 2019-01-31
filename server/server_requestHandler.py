@@ -14,7 +14,8 @@ CJ = CreateJson()
 def Handle(json_fromClient):
     type_msg = json_fromClient["type"] 
     {
-        type_msg == "GetKey": GetServerKey()
+        type_msg == "GetKey": GetServerKey(),
+        type_msg == "Register": Register(json_fromClient["email"])
         
     }
     return CJ.Get()
@@ -29,4 +30,5 @@ def GetServerKey():
     CJ.Set(_json_toClient)
 
 
-
+def Register(email):
+    

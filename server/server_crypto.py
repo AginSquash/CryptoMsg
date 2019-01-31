@@ -42,7 +42,7 @@ def CreateServerRSA():
  
 
 def DecryptRSA(dataFromClient):
-    print("Data: " + str(dataFromClient))
+    #print("Data: " + str(dataFromClient))
     private_key = _LoadServer_Private_RSA()
     decrypted = private_key.decrypt(
         dataFromClient,
@@ -52,8 +52,8 @@ def DecryptRSA(dataFromClient):
             label=None
         )
     )
-    print("Decrypted ", str(decrypted))
-    return decrypted.decode(errors='replace')   #decoded!
+    #print("Decrypted ", str(decrypted))
+    return decrypted.decode()   #decoded!
 
 
 
