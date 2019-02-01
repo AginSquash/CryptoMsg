@@ -10,6 +10,8 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 
+from cryptography.fernet import Fernet
+
 
 def CreateServerRSA():
     private_key = rsa.generate_private_key(
@@ -74,3 +76,16 @@ def LoadServerPublicRSA(private_key):
         encoding=serialization.Encoding.PEM,
         format=serialization.PublicFormat.PKCS1
         )
+
+
+###     F   E   R   N   E   T       ###  
+
+def FernetEncrypt(cipher_key, text_to_encypt):
+    cipher = Fernet(cipher_key)
+    encrypted_text = cipher.encrypt(text_to_encypt.encode()) 
+    return encrypted_text
+
+def FernetDecrypt(cipher_key, encrypted_text):
+    cipher = Fernet(cipher_key)
+    decrypted_text = cipher.decrypt(encrypted_text)
+    return decrypted_text.decode()

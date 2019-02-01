@@ -32,12 +32,12 @@ try:
 
             print(str(server_crypto.DecryptRSA(data)) )
 
-            dictionary = ast.literal_eval( str(server_crypto.DecryptRSA(data)))
+            dictionary = ast.literal_eval( str(server_crypto.DecryptRSA(data) ))
 
             _json_toClient = server_requestHandler.Handle( dictionary ) 
             if not data:
                 break
-            #conn.send(json.dumps(_json_toClient).encode())
+            conn.send(_json_toClient)      #json.dumps(_json_toClient).encode())
             #print(str(_json_toClient.decode()))
             conn.close()
         except Exception as e:
