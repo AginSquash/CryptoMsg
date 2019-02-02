@@ -1,6 +1,6 @@
 import sqlite3
  
-def ConnectToDB():
+def ConnectToDB():  #FIXME Name for database
     conn = sqlite3.connect("_temp_Userkeys.db") # :memory: RAM
     cursor = conn.cursor()
     return conn, cursor

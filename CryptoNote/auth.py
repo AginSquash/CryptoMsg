@@ -5,7 +5,8 @@ import datetime
 import client_crypto
 import crypto_fernet
 import database
-import base64
+import Util.json_creator as jc
+#import base64
 
 def Register():
     sock = client.ConnectToServer()
@@ -23,7 +24,12 @@ def Register():
     encrypted_request = client_crypto.EncryptRSA(send_request)
     #sock.send(json.dumps(encrypted_request).encode())
     print("From DataBase: %s" % database.GetData("ServerKey"))
-    sock.send(encrypted_request)
+
+    to_send =  jc.Create(encrypted_request, "")
+    
+    print("Json look like: " + str(to_send) )
+
+    sock.send(to_send)
     status = sock.recv(1024)
     key = database.GetData("ServerKey").encode() 
     print("key: " + str(key) )

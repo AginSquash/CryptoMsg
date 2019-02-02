@@ -36,7 +36,7 @@ def send_email(subject, to_addr, from_addr, body_text):
 #    body_text = "Python rules them all!"
 #    send_email(subject, to_addr, from_addr, body_text)
 
-def RegisterEmail(email):
+def RegisterEmail(email):       #TODO Check temp email
     subject = "Register CryptoMSG"
     to_addr = email
     from_addr = "aginsquash@gmail.com"

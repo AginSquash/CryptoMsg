@@ -28,11 +28,21 @@ try:
             conn, addr = sock.accept()
             print("connected: "+ str(addr))
             data = conn.recv(1024)
-            #json_fromClient = json.loads(data.decode()) #json.loads(data.decode())
+            json_fromClient = json.loads(data.decode())
+            
+            print(len(str(data)) )
+            print("Str json_fromClient[header] " + json_fromClient["header"])
 
-            print(str(server_crypto.DecryptRSA(data)) )
+            print(str(server_crypto.DecryptRSA( json_fromClient["header"]) ) ) #FIXME Ciphertext length must be equal to key size.
 
-            dictionary = ast.literal_eval( str(server_crypto.DecryptRSA(data) ))
+            try:        #TODO Test this 
+                dec =  server_crypto.DecryptRSA(data)
+                dictionary = ast.literal_eval( str(server_crypto.DecryptRSA(data) ))
+            except Exception as e:
+                dictionary  = {
+                    "type": "Error",
+                    "name_Error": str(e)
+                }
 
             _json_toClient = server_requestHandler.Handle( dictionary ) 
             if not data:
