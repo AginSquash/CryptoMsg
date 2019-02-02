@@ -22,12 +22,16 @@ def Register():
 
     send_request = {"type": "Register", "email": user_email, "key": database.GetData("ServerKey")} #str(key)
     encrypted_request = client_crypto.EncryptRSA(send_request)
+
+    print("enc_req len: %s" % len(encrypted_request))
+
+
     #sock.send(json.dumps(encrypted_request).encode())
     print("From DataBase: %s" % database.GetData("ServerKey"))
 
     to_send =  jc.Create(encrypted_request, "")
     
-    print("Json look like: " + str(to_send) )
+    print("to_send len: %s" %len(to_send))
 
     sock.send(to_send)
     status = sock.recv(1024)

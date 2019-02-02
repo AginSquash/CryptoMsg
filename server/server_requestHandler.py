@@ -7,7 +7,7 @@ import json
 import base64
 
 class CreateJson:
-    new = {
+    new = { 
     "type": "Error"
     }
     def Set(self, data):
@@ -20,7 +20,7 @@ CJ = CreateJson()
 def Handle(json_fromClient):
     type_msg = json_fromClient["type"] 
     {
-        type_msg == "Error"   : print(json_fromClient["name_Error"]), #TODO add error handler 
+        #type_msg == "Error"   : print(json_fromClient["name_Error"]), #TODO add error handler 
         type_msg == "GetKey"  : GetServerKey(),
         type_msg == "Register": Register(json_fromClient) #send_email.RegisterEmail(json_fromClient["email"])
 

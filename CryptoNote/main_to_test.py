@@ -5,4 +5,4 @@ import auth
 
 #database.CreateKeysDB()
 auth.Register()
-print (database.GetData("ServerKey"))
+#print (database.GetData("ServerKey"))

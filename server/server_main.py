@@ -4,6 +4,7 @@ import server_crypto
 import time
 import server_requestHandler
 import ast
+import base64
 
 try:
     sock = socket.socket()
@@ -28,22 +29,30 @@ try:
             conn, addr = sock.accept()
             print("connected: "+ str(addr))
             data = conn.recv(1024)
-            json_fromClient = json.loads(data.decode())
-            
-            print(len(str(data)) )
-            print("Str json_fromClient[header] " + json_fromClient["header"])
 
-            print(str(server_crypto.DecryptRSA( json_fromClient["header"]) ) ) #FIXME Ciphertext length must be equal to key size.
+
+            json_fromClient = json.loads(data.decode()) 
+            
+            print("Data len: %s" % len(data) )
+            print("Str json_fromClient[header] " + json_fromClient["header"])
+            
+            header = base64.b64decode( json_fromClient["header"] )
+
+            print("Header len: %s" % len(header))
+
+            print(str(server_crypto.DecryptRSA( header ) ) )
 
             try:        #TODO Test this 
-                dec =  server_crypto.DecryptRSA(data)
-                dictionary = ast.literal_eval( str(server_crypto.DecryptRSA(data) ))
+                dec =  server_crypto.DecryptRSA(header)
+                dictionary = ast.literal_eval( str( dec ))
             except Exception as e:
                 dictionary  = {
                     "type": "Error",
                     "name_Error": str(e)
                 }
 
+
+            print(dictionary["type"])
             _json_toClient = server_requestHandler.Handle( dictionary ) 
             if not data:
                 break
